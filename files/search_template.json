@@ -1,0 +1,41 @@
+{
+    "location": [
+        "location of {blank}"
+    ],
+    "type of thing": [
+        "{blank} is a type of"
+    ],
+    "material": [
+        "{blank} is made of"
+    ],
+    "can be": [
+        "{blank} can be"
+    ],
+    "what is it used for": [
+        "{blank} is capable of",
+        "{blank} is used for"
+    ],
+    "what does it do": [
+        "{blank} wants",
+        "{blank} is capable of",
+        "{blank} is a way of"
+    ],
+    "makes you think of": [
+        "types of {blank}",
+        "{blank} is a type of",
+        "things located at {blank}",
+        "parts of {blank}",
+        "things that want {blank}",
+        "things used for {blank}"
+    ],
+    "doesn't want": [
+        "{blank} doesn't want"
+    ],
+    "parts": [
+        "{blank} has",
+        "parts of {blank}"
+    ],
+    "properties": [
+        "properties of {blank}"
+    ]
+}
