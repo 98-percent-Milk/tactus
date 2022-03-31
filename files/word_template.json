@@ -1,13 +1,15 @@
 {
     "word": "",
-    "location": [],
-    "type of thing": [],
-    "material": [],
-    "can be": [],
-    "what is it used for": [],
-    "what does it do": [],
-    "makes you think of": [],
-    "doesn't want": [],
-    "parts": [],
-    "properties": []
+    "What type of thing is it?": [],
+    "Things that want {blank}?": [],
+    "Type of {blank}": [],
+    "Where do you find/keep it?": [],
+    "What does it go with?": [],
+    "What does it make you think of?": [],
+    "What is it used for?": [],
+    "What does it do?": [],
+    "What does it look like?": [],
+    "What is it made of?": [],
+    "Properties of {blank}": [],
+    "What parts does it have?": []
 }

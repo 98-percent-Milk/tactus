@@ -3,12 +3,13 @@ from time import sleep
 
 
 def main():
-    word_data = load_file('witch')
+    word = input("Choose word: ")
+    word_data = load_file(word)
     display_single(word_data)
 
 
 def wait_for_answer() -> None:
-    input("Think for an answer and Press Enter to see possible answers")
+    input("\nThink of an answer and Press Enter to see possible answers")
 
 
 def get_option(data: dict) -> str:
@@ -29,8 +30,8 @@ def get_option(data: dict) -> str:
 def display_single(data: dict) -> None:
     option = get_option(data)
     wait_for_answer()
-    title = f"{option.title()} of a {data['word'].upper()}"
-    print(f"\n{title:^120}\n")
+    # title = f"{option.title()}"
+    print(f"\n{option.title():^120}\n")
     count = -1
     for val in data[option]:
         if (count := count + 1) == 4:

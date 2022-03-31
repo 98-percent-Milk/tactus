@@ -1,37 +1,65 @@
 from requests import get
+# from nltk.corpus import wordnet as wn
+# from datamuse import Datamuse
 from bs4 import BeautifulSoup as bs
 from pprint import pprint
 from json import dumps, loads
+from filteration import if_animal
+
+# API = Datamuse()
 
 
-# get_list(word, search_t, divs)
-# dont_need = ['synonyms', "related terms", "derived terms", "word forms", "etymological", ""]
-# location = ["location of {blank}"]
-# type of thing = ["{blank} is a type of"]
-# material = ["{blank} is made of"]
-# can be = ["{blank} can be..."]
-# what is it used for = ["{blank} is capable of...", "{blank} is used for..."]
-# what does it do = ["{blank} wants...", "{blank} is capable of", "{blank} is a way of"]
-# make you think of = ["types of {blank}", "{blank} is a type of...", "things located at {blank}",
-#                      "parts of {blank}", "things that want {blank}", "things used for {blank}"]
-# doesn't want = ["{blank} doesn't want...", ]
-# parts = ["{blank} has...", "parts of {blank}"]
-# properties = ["properties of {blank}"]
 def main():
-    search_terms = load_file('search_template')
+    """How to use it
+    Step.1 Run the command -> python ./main.py
+    Step.2 Enter a word you would like to search -> Example: cat
+    Step.3 It will collect words that are either associated or describes the
+           'word' and will save it to files directory as a json file with same
+           filename as the 'word'
+    Step.4 Use display function to output the collected words.
+    """
+    word = input("Enter a word you would like to search: ")
+    category = input("Enter category: ")
+    collect_words(word, category)
+
+
+def key_change(data: dict, word: str) -> None:
+    """Replace part of dictionary key with given word
+
+    Args:
+        data (dict): data containing replaceable part
+        word (str): new word to replace the part
+    """
+    new_keys = [x.replace('{blank}', word) for x in data]
+    new_keys.reverse()
+    old_keys = [x for x in data]
+    for key in old_keys:
+        data[new_keys.pop()] = data.pop(key)
+
+
+def collect_words(word: str = '', category: str = '') -> None:
+    """Collect words that either associated or describes the 'word'
+
+    Args:
+        word (str, optional): Search word. Defaults to ''.
+    """
+    if word == '':
+        print("Word can't be an empty string!!!")
+        return
+    search_terms = load_file('new_template')
     word_template = load_file('word_template')
-    word = 'witch'
+    key_change(search_terms, word)
+    key_change(word_template, word)
     word_template['word'] = word
     soup = get_soup(word)
     divs = get_divs(soup)
     category_sets = separate_categories(soup)
-    # pprint(category_sets[0])
-    # pprint(category_sets[1])
     for key in search_terms:
         word_template[key] = get_list(
             word, search_terms[key], divs, category_sets)
-
-    pprint(word_template)
+    if category == "animal":
+        key = "What type of thing is it?"
+        word_template[key] = if_animal(word_template[key], word)
     save_file(word, word_template)
 
 
@@ -80,8 +108,8 @@ def get_list(word: str, search_t: list, divs: list, category_sets: list) -> list
                 i = with_category.index(term)
                 items.extend(get_items(divs[with_more[i][0]]))
             except ValueError:
-                print("Category Not Found")
-    return items
+                print(f"Category: {term} -> Not Found")
+    return list(set(items))
 
 
 def get_items(div: list) -> list:
@@ -93,9 +121,9 @@ def get_items(div: list) -> list:
     Returns:
         list: list of items
     """
-    items = [x.a.text.strip() for x in div.find_all('li')]
+    items = [x.a.text.lower().strip() for x in div.find_all('li')]
     try:
-        items.remove("More »")
+        items.remove("more »")
     except ValueError:
         pass
     return items
@@ -175,6 +203,22 @@ def load_file(filename: str) -> dict:
     with open(f"files/{filename}.json", 'r') as f:
         data = loads(f.read())
     return data
+
+
+# def lexnames(word: str, category: str) -> list:
+#     temp = word.split(' ')
+#     if category in temp:
+#         return True
+#     if len(temp) == 1:
+#         return True if category in [x.lexname().split('.')[1] for x in wn.synsets(word)] else False
+#     for t in temp:
+#         if category in [x.lexname().split('.')[1] for x in wn.synsets(t)]:
+#             return True
+#     return False
+
+
+# def ml(search_word: str, look_word: str) -> list:
+#     return True if look_word in [x['word'] for x in API.words(ml=f"{search_word}")] else False
 
 
 if __name__ == "__main__":

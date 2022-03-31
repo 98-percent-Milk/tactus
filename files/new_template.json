@@ -1,0 +1,49 @@
+{
+    "What type of thing is it?": [
+        "{blank} is a type of",
+        "{blank} is a species of",
+        "{blank} /r/InstanceOf"
+    ],
+    "Things that want {blank}?": [
+        "things that want {blank}"
+    ],
+    "Type of {blank}": [
+        "types of {blank}"
+    ],
+    "Where do you find/keep it?": [
+        "location of {blank}"
+    ],
+    "What does it go with?": [
+        "things used for {blank}"
+    ],
+    "What does it make you think of?": [
+        "things located at {blank}",
+        "{blank} is part of",
+        "things that want {blank}"
+    ],
+    "What is it used for?": [
+        "{blank} is capable of",
+        "{blank} is used for",
+        "{blank} is a way of",
+        "things that require {blank}",
+        "{blank} can be"
+    ],
+    "What does it do?": [
+        "{blank} is capable of"
+    ],
+    "What does it look like?": [
+        "{blank} has"
+    ],
+    "What is it made of?": [
+        "{blank} is made of",
+        "parts of {blank}",
+        "{blank} has"
+    ],
+    "Properties of {blank}": [
+        "properties of {blank}"
+    ],
+    "What parts does it have?": [
+        "{blank} has",
+        "parts of {blank}"
+    ]
+}
