@@ -1,0 +1,26 @@
+{
+    "Where do you find/keep it?": [
+        "location of {blank}"
+    ],
+    "What does it go with?": [
+        "things used for {blank}"
+    ],
+    "What does it make you think of?": [
+        "things located at {blank}",
+        "{blank} is part of"
+    ],
+    "What is it used for?": [
+        "{blank} is capable of",
+        "{blank} is used for"
+    ],
+    "What does it do?": [
+        "{blank} is capable of"
+    ],
+    "What does it look like?": [
+        "{blank} has"
+    ],
+    "What parts does it have?": [
+        "{blank} has",
+        "parts of {blank}"
+    ]
+}

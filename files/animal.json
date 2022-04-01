@@ -1,0 +1,11 @@
+{
+    "arthropod.n.01": "insect",
+    "bird.n.01": "bird",
+    "reptile.n.01": "reptile",
+    "amphibian.n.03": "reptile",
+    "mammal.n.01": "mammal",
+    "aquatic_vertebrate.n.01": "sea creature",
+    "aquatic_mammal.n.01": "sea creature",
+    "cephalopod.n.01": "sea creature",
+    "crustacean.n.01": "sea creature"
+}

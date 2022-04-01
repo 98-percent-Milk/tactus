@@ -13,6 +13,7 @@ def wait_for_answer() -> None:
 
 
 def get_option(data: dict) -> str:
+    data = {key: value for key, value in data.items() if value != []}
     temp = list(enumerate(data, start=-1))[1:]
     index = [x[0] for x in temp]
     print(f"{'Available options':-^30}")

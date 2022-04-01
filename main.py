@@ -1,11 +1,8 @@
 from requests import get
-# from nltk.corpus import wordnet as wn
-# from datamuse import Datamuse
 from bs4 import BeautifulSoup as bs
+from filtration import if_animal
+from utils import load_file, save_file, all_parents
 from pprint import pprint
-from json import dumps, loads
-from filteration import if_animal
-
 # API = Datamuse()
 
 
@@ -20,7 +17,11 @@ def main():
     """
     word = input("Enter a word you would like to search: ")
     category = input("Enter category: ")
-    collect_words(word, category)
+    word_template = collect_words(word, category)
+    if category == "animal":
+        new_categories = list(load_file('animal'))
+        new_word = all_parents(word, new_categories)[0].split('.')[0]
+    collect_additional(new_word, word, category, word_template)
 
 
 def key_change(data: dict, word: str) -> None:
@@ -37,7 +38,23 @@ def key_change(data: dict, word: str) -> None:
         data[new_keys.pop()] = data.pop(key)
 
 
-def collect_words(word: str = '', category: str = '') -> None:
+def collect_additional(new_word: str, old_word: str, category: str, word_template: dict) -> None:
+    search_terms = load_file('new_template')
+    if category == "animal":
+        add_template = load_file("additional")
+        key_change(add_template, new_word)
+        key_change(search_terms, new_word)
+        soup = get_soup(new_word)
+        divs = get_divs(soup)
+        category_sets = separate_categories(soup)
+        for key in search_terms:
+            word_template[key.replace(new_word, old_word)] = get_list(
+                new_word, search_terms[key], divs, category_sets)
+        pprint(word_template)
+        save_file(old_word, word_template)
+
+
+def collect_words(word: str = '', category: str = '') -> dict:
     """Collect words that either associated or describes the 'word'
 
     Args:
@@ -50,9 +67,9 @@ def collect_words(word: str = '', category: str = '') -> None:
     word_template = load_file('word_template')
     key_change(search_terms, word)
     key_change(word_template, word)
-    word_template['word'] = word
     soup = get_soup(word)
     divs = get_divs(soup)
+    word_template['word'] = word
     category_sets = separate_categories(soup)
     for key in search_terms:
         word_template[key] = get_list(
@@ -61,6 +78,7 @@ def collect_words(word: str = '', category: str = '') -> None:
         key = "What type of thing is it?"
         word_template[key] = if_animal(word_template[key], word)
     save_file(word, word_template)
+    return word_template
 
 
 def separate_categories(soup: bs) -> list:
@@ -178,47 +196,6 @@ def get_soup(search_term: str, url: str = "https://conceptnet.io/c/en/{}") -> bs
         bs: BeautifulSoup object
     """
     return bs(get(url.format(search_term)).text, 'html.parser')
-
-
-def save_file(filename: str, data: dict) -> None:
-    """Save 'data' dictionary object as json file in files directory
-
-    Args:
-        filename (str): Name of the json file
-        data (dict): 'data' dictionary object that is being saved
-    """
-    with open(f"files/{filename}.json", 'w') as f:
-        f.write(dumps(data, indent=4))
-
-
-def load_file(filename: str) -> dict:
-    """Load json file from files directory
-
-    Args:
-        filename (str): Name of the json file
-
-    Returns:
-        dict: return json file as dictionary object
-    """
-    with open(f"files/{filename}.json", 'r') as f:
-        data = loads(f.read())
-    return data
-
-
-# def lexnames(word: str, category: str) -> list:
-#     temp = word.split(' ')
-#     if category in temp:
-#         return True
-#     if len(temp) == 1:
-#         return True if category in [x.lexname().split('.')[1] for x in wn.synsets(word)] else False
-#     for t in temp:
-#         if category in [x.lexname().split('.')[1] for x in wn.synsets(t)]:
-#             return True
-#     return False
-
-
-# def ml(search_word: str, look_word: str) -> list:
-#     return True if look_word in [x['word'] for x in API.words(ml=f"{search_word}")] else False
 
 
 if __name__ == "__main__":

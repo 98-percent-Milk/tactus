@@ -1,23 +1,23 @@
 {
     "word": "eagle",
     "What type of thing is it?": [
-        "accipitridae",
         "bird of prey",
         "animal",
         "raptor",
+        "bird",
         "a large bird of prey",
-        "bird"
+        "accipitridae"
     ],
     "Things that want eagle?": [],
     "Type of eagle": [
-        "golden eagle",
-        "sea eagle",
-        "fish eagle",
-        "this bird",
-        "harpy",
-        "tawny eagle",
+        "eaglet",
         "bald eagle",
-        "eaglet"
+        "sea eagle",
+        "harpy",
+        "golden eagle",
+        "this bird",
+        "fish eagle",
+        "tawny eagle"
     ],
     "Where do you find/keep it?": [
         "the top of a mountain"
@@ -25,8 +25,8 @@
     "What does it go with?": [],
     "What does it make you think of?": [],
     "What is it used for?": [
-        "spot a rabbit on the ground",
         "score",
+        "spot a rabbit on the ground",
         "spot prey from afar"
     ],
     "What does it do?": [
